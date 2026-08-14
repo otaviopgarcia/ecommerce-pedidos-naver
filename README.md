@@ -7,8 +7,8 @@
 
 | Nome | Papel na Aula 01 |
 |---|---|
-| _(nome do integrante 1)_ | Responsável do dia |
-| _(nome do integrante 2)_ | |
+| _(nome do integrante 1)_ | Otávio Pinheiro Garcia |
+| _(nome do integrante 2)_ | Nykolas Guimarães Isler |
 | _(nome do integrante 3)_ | |
 | _(nome do integrante 4)_ | |
 
