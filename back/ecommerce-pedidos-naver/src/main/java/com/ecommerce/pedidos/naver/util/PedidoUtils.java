@@ -55,22 +55,24 @@ public class PedidoUtils {
     public static String formatarLinhaDoRecibo(String nomeProduto, int quantidade, double precoUnitario) {
         double totalItem = precoUnitario * quantidade;
         return String.format("%-20s x%-3d | Un: R$ %7.2f | Total: R$ %7.2f", 
-                nomeProduto, quantidade, precoUnitario, totalItem);
+                nomeProduto != null ? nomeProduto : "Produto", quantidade, precoUnitario, totalItem);
     }
 
-    // (Desejável) Método Extra: Montar Recibo Completo com StringBuilder
+    // Método Extra Desejável: Montar Recibo Completo com StringBuilder e validações robustas
     public static String montarReciboCompleto(String numPedido, String[] produtos, double[] precos, int[] quantidades) {
         StringBuilder recibo = new StringBuilder();
         
         recibo.append("====================================================\n");
-        recibo.append("               RECIBO DE COMPRA - ").append(numPedido).append("\n");
+        recibo.append("               RECIBO DE COMPRA - ").append(numPedido != null ? numPedido : "S/N").append("\n");
         recibo.append("====================================================\n");
 
         if (produtos == null || precos == null || quantidades == null || produtos.length == 0) {
             recibo.append("Nenhum item adicionado ao pedido.\n");
         } else {
             for (int i = 0; i < produtos.length; i++) {
-                recibo.append(formatarLinhaDoRecibo(produtos[i], quantidades[i], precos[i])).append("\n");
+                if (produtos[i] != null) {
+                    recibo.append(formatarLinhaDoRecibo(produtos[i], quantidades[i], precos[i])).append("\n");
+                }
             }
         }
 
