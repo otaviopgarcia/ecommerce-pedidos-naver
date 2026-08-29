@@ -1,5 +1,3 @@
-package com.ecommerce.pedidos.naver;
-
 import com.ecommerce.pedidos.naver.modelo.Produto;
 
 public class Aplicacao {
@@ -10,6 +8,14 @@ public class Aplicacao {
                 "Mouse Gamer",
                 300.50,
                 50);
+                System.out.println(p);
+                System.out.println(r);
 
+                r.baixarEstoque(15);
+
+                System.out.println(r);
+
+                
+        
     }
 }
