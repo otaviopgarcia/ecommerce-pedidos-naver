@@ -1,45 +1,59 @@
 package com.ecommerce.pedidos.naver.modelo;
 
-public class Cliente {
-    private String nome;
-    private String cpf;
+/**
+ * Representa o cliente que consome os produtos na loja [24].
+ * Estende os comportamentos e atributos comuns de Pessoa [25].
+ */
+public class Cliente extends Pessoa {
     private String email;
     private String telefone;
     private String endereco;
 
-    public Cliente() {}
-
     public Cliente(String nome, String cpf, String email, String telefone, String endereco) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
+        super(nome, cpf); // Chama obrigatoriamente o construtor da mãe na primeira linha [25, 26]
+        setEmail(email);
+        setTelefone(telefone);
+        setEndereco(endereco);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        // Requisito desejável: validação de formato básico contendo '@' [7, 12]
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("O endereço de e-mail informado é inválido.");
+        }
+        this.email = email.trim();
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    // Getters e Setters
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getCpf() { return cpf; }
-    // CPF também é imutável após o cadastro, por isso não criamos setCpf
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getTelefone() { return telefone; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
-
-    public String getEndereco() { return endereco; }
-    public void setEndereco(String endereco) { this.endereco = endereco; }
-
-    // Método de negócio sugerido pelo roteiro
+    /**
+     * Implementação obrigatória da identificação pessoal abstrata [25, 26].
+     */
+    @Override
     public String getIdentificacao() {
-        return String.format("%s (CPF: %s)", this.nome, this.cpf);
+        return String.format("%s (Documento: %s)", getNome(), getDocumento());
     }
 
     @Override
     public String toString() {
-        return String.format("Cliente: %s | E-mail: %s | Endereço: %s", nome, email, endereco);
+        return String.format("Cliente: %s | E-mail: %s | Telefone: %s", getNome(), email, telefone);
     }
 }
