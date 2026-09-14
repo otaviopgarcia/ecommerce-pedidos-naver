@@ -1,24 +1,26 @@
 # Sistema de Gestão de Pedidos — E-commerce
 
-> Projeto integrador da Unidade Curricular **Desenvolvimento Back-end**
-> Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas — Turma CSTADS601
+> Projeto integrador da Unidade Curricular **Desenvolvimento Back-end**  
+> Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas — Turma **CSTADS601**
 
-## Equipe / Squad
+## 📋 Equipe / Squad
 
-| Nome | Papel na Aula 01 |
-|---|---|
-| _Otávio Pinheiro Garcia_ |  |
-| _Nykolas Guimarães Isler_ |  |
-| _(nome do integrante 3)_ | |
-| _(nome do integrante 4)_ | |
+| Nome | Papel no Projeto |
+|------|------------------|
+| Otávio Pinheiro Garcia | Desenvolvedor Back-end |
+| Nykolas Guimarães Isler | Desenvolvedor Back-end |
+| _(integrante 3)_ | _(a definir)_ |
+| _(integrante 4)_ | _(a definir)_ |
 
-## Descrição do desafio
+---
 
-_(Resuma aqui, com suas palavras, o desafio: uma equipe de desenvolvimento recebeu a demanda de
-construir um sistema de gestão de pedidos para um e-commerce, contemplando cadastro de produtos,
-clientes, pedidos e processamento de pagamentos.)_
+## 📝 Descrição do desafio
 
-## Funcionalidades previstas
+A equipe recebeu a demanda de construir um **sistema de gestão de pedidos para um e-commerce**, contemplando cadastro de produtos, clientes, pedidos e processamento de pagamentos. O projeto será desenvolvido ao longo do semestre, evoluindo desde os conceitos fundamentais de orientação a objetos até a construção de uma API REST completa com testes automatizados e pipeline de CI/CD.
+
+---
+
+## ✅ Funcionalidades previstas
 
 - [ ] Cadastro e gerenciamento de produtos
 - [ ] Cadastro e gerenciamento de clientes
@@ -28,65 +30,45 @@ clientes, pedidos e processamento de pagamentos.)_
 - [ ] Pipeline de CI/CD
 - [ ] API REST para consumo por um front-end
 
-## Tecnologias
+---
 
-- Java
-- Maven
-- Git / GitHub
-- _(demais tecnologias serão adicionadas ao longo do semestre: JUnit, Spring Boot, banco de
-  dados, GitHub Actions...)_
+## 🛠️ Tecnologias
 
-## Estrutura de pastas
+- **Java** (versão 17+)
+- **Maven** (gerenciamento de dependências e build)
+- **Git / GitHub** (versionamento e colaboração)
+- **VS Code** (IDE utilizada pela equipe)
 
-```
-ecommerce-pedidos-NOMEDASQUAD/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/senai/ecommerce/
-│   │           ├── modelo/
-│   │           ├── servico/
-│   │           ├── repositorio/
-│   │           └── util/
-│   └── test/
-│       └── java/
-│           └── com/senai/ecommerce/
-├── pom.xml
+> Tecnologias que serão adicionadas ao longo do semestre: **JUnit**, **Spring Boot**, **Banco de Dados**, **GitHub Actions**.
+
+---
+
+## 📁 Estrutura de pastas (atual)
+
+```text
+ecommerce-pedidos-naver/
+├── .vscode/                     # Configurações da IDE
+├── back/                        # Código back-end (Java)
+│   ├── src/
+│   │   ├── main/
+│   │   │   └── java/
+│   │   │       └── com/senai/ecommerce/
+│   │   │           ├── modelo/       # Classes de domínio (Produto, Cliente, Pedido, etc.)
+│   │   │           ├── servico/      # Regras de negócio
+│   │   │           ├── repositorio/  # Persistência e DAO
+│   │   │           └── util/         # Classes utilitárias
+│   │   └── test/
+│   │       └── java/
+│   │           └── com/senai/ecommerce/
+│   └── pom.xml
+├── front/                       # Código front-end (a ser desenvolvido)
 ├── README.md
 └── .gitignore
-```
+🚀 Como rodar o projeto
+(A preencher a partir das próximas aulas, conforme o projeto evoluir.)
 
-## Como rodar o projeto
+Por enquanto, o back-end pode ser compilado com:
 
-_(Preencher a partir das próximas aulas, conforme o projeto evoluir.)_
-
-## Roadmap do projeto (por aula)
-
-| Aula | Entrega |
-|---|---|
-| 01 | Repositório criado, estruturado, com README e commit inicial |
-| 02 | Fluxo de branches e primeiro Pull Request revisado |
-| 03 | Classe utilitária (Utils) do domínio |
-| 04 | Classes de domínio inicial (Produto, Cliente, Pedido, ItemPedido) |
-| 05 | Encapsulamento e abstração aplicados |
-| 06 | Hierarquia de formas de pagamento (herança) |
-| 07 | Relacionamentos entre classes do domínio |
-| 08 | Módulo de pagamento polimórfico |
-| 09 | Tratamento de exceções |
-| 10 | Suíte de testes unitários |
-| 11 | Suíte de testes de integração + relatório de cobertura |
-| 12 | Persistência: conexão, Create e Read |
-| 13 | Persistência: Update, Delete e padrão DAO/Repository |
-| 14 | Migração para Spring Boot |
-| 15 | API REST + pipeline CI/CD |
-| 16 | Entrega final, documentação e apresentação |
-
-## Combinado da equipe (ética e convivência)
-
-1. _(regra 1 definida pela equipe)_
-2. _(regra 2 definida pela equipe)_
-3. _(regra 3 definida pela equipe)_
-
-## Licença
-
-Projeto acadêmico — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
+bash
+cd back
+mvn clean install
