@@ -1,92 +1,110 @@
-# Sistema de Gestão de Pedidos — E-commerce
+# Sistema de Gestão de Pedidos — E-commerce 🛒
 
-> Projeto integrador da Unidade Curricular **Desenvolvimento Back-end**
-> Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas — Turma CSTADS601
+Projeto integrador da Unidade Curricular **Desenvolvimento Back-end** do Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas (CSTADS601) — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
 
-## Equipe / Squad
+---
 
-| Nome | Papel na Aula 01 |
-|---|---|
-| _Otávio Pinheiro Garcia_ |  |
-| _Nykolas Guimarães Isler_ |  |
-| _(nome do integrante 3)_ | |
-| _(nome do integrante 4)_ | |
+## 👥 Equipe / Squad
 
-## Descrição do desafio
+| Nome                        | GitHub                                                                                       | Papel no Projeto       |
+| --------------------------- | -------------------------------------------------------------------------------------------- | ---------------------- |
+| **Otávio Pinheiro Garcia**  | [@otaviopgarcia](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fgithub.com%2Fotaviopgarcia) | Desenvolvedor Back-End |
+| **Nykolas Guimarães Isler** | [@NykolasDev](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fgithub.com%2FNykolasDev)       | Desenvolvedor Back-End |
 
-_(Resuma aqui, com suas palavras, o desafio: uma equipe de desenvolvimento recebeu a demanda de
-construir um sistema de gestão de pedidos para um e-commerce, contemplando cadastro de produtos,
-clientes, pedidos e processamento de pagamentos.)_
+---
 
-## Funcionalidades previstas
+## 📝 Descrição do Desafio
 
-- [ ] Cadastro e gerenciamento de produtos
-- [ ] Cadastro e gerenciamento de clientes
-- [ ] Criação e gerenciamento de pedidos
-- [ ] Processamento de pagamentos (cartão, boleto, Pix)
-- [ ] Testes automatizados (unitários e de integração)
-- [ ] Pipeline de CI/CD
-- [ ] API REST para consumo por um front-end
+Construção de um **Sistema de Gestão de Pedidos para um E-commerce** completo, robusto e escalável. O projeto aplica de forma prática e incremental os conceitos da **Programação Orientada a Objetos (POO)** em Java, versionamento profissional com Git/GitHub, testes automatizados (unitários e de integração com cobertura mínima de 70%), persistência de dados e exposição de endpoints por meio de uma API RESTful utilizando Spring Boot, integrada a um pipeline de CI/CD automatizado.
 
-## Tecnologias
+---
 
-- Java
-- Maven
-- Git / GitHub
-- _(demais tecnologias serão adicionadas ao longo do semestre: JUnit, Spring Boot, banco de
-  dados, GitHub Actions...)_
+## ⚙️ Funcionalidades Previstas
 
-## Estrutura de pastas
+* [x] **Cadastro e gerenciamento de produtos** (controle de estoque, preço e status ativo/inativo)
+* [x] **Cadastro e gerenciamento de clientes e funcionários** (hierarquia abstrata a partir de `Pessoa`)
+* [x] **Criação e gerenciamento de pedidos** (adição dinâmica de itens e cálculo automático de subtotais e totais)
+* [x] **Processamento de pagamentos** (hierarquia polimórfica para Cartão de Crédito, Boleto Bancário e Pix)
+* [ ] **Testes automatizados** (unitários e de integração com cobertura de no mínimo 70%)
+* [ ] **Pipeline de CI/CD** (GitHub Actions para automação de testes e builds)
+* [ ] **API REST** (Spring Boot para integração com front-end)
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Linguagem:** Java 17+
+* **Gerenciador de Build:** Apache Maven
+* **Versionamento:** Git &amp; GitHub
+* *(Próximas tecnologias: JUnit 5, Spring Boot, Spring Data JPA, H2/PostgreSQL Database, GitHub Actions)*
+
+---
+
+## 📂 Estrutura de Pastas do Repositório
+
+O repositório foi organizado em dois módulos principais para isolar as responsabilidades:
 
 ```
-ecommerce-pedidos-NOMEDASQUAD/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/senai/ecommerce/
-│   │           ├── modelo/
-│   │           ├── servico/
-│   │           ├── repositorio/
-│   │           └── util/
-│   └── test/
-│       └── java/
-│           └── com/senai/ecommerce/
-├── pom.xml
-├── README.md
-└── .gitignore
+ecommerce-pedidos-naver/
+├── back/                    # Módulo Back-End (Java + Maven)
+│   ├── src/
+│   │   ├── main/
+│   │   │   └── java/
+│   │   │       └── com/ecommerce/pedidos/naver/
+│   │   │           ├── modelo/                  # Entidades de domínio (Produto, Cliente, Funcionario, Pedido, etc.)
+│   │   │           │   └── pagamento/           # Hierarquia FormaPagamento, CartaoCredito, Boleto, Pix
+│   │   │           └── Aplicacao.java           # Classe de execução e simulação de cenários
+│   │   └── test/
+│   ├── pom.xml              # Dependências e configurações do Maven
+│   └── .gitignore           # Filtros do Git para o back-end
+└── front/                   # Módulo Front-End
+
 ```
 
-## Como rodar o projeto
+---
 
-_(Preencher a partir das próximas aulas, conforme o projeto evoluir.)_
+## 🚀 Como Rodar o Projeto
 
-## Roadmap do projeto (por aula)
+1. **Clonar o repositório:**  
+```  
+git clone https://github.com/otaviopgarcia/ecommerce-pedidos-naver.git  
+```
+2. **Abrir a pasta do projeto Java:**  
+  * Abra **apenas a pasta `back`** no VS Code ou IntelliJ IDEA para que a IDE reconheça corretamente a raiz do Maven (`pom.xml`).
+3. **Executar a aplicação:**  
+  * Execute o método `main` localizado no arquivo `com.ecommerce.pedidos.naver.Aplicacao`.
 
-| Aula | Entrega |
-|---|---|
-| 01 | Repositório criado, estruturado, com README e commit inicial |
-| 02 | Fluxo de branches e primeiro Pull Request revisado |
-| 03 | Classe utilitária (Utils) do domínio |
-| 04 | Classes de domínio inicial (Produto, Cliente, Pedido, ItemPedido) |
-| 05 | Encapsulamento e abstração aplicados |
-| 06 | Hierarquia de formas de pagamento (herança) |
-| 07 | Relacionamentos entre classes do domínio |
-| 08 | Módulo de pagamento polimórfico |
-| 09 | Tratamento de exceções |
-| 10 | Suíte de testes unitários |
-| 11 | Suíte de testes de integração + relatório de cobertura |
-| 12 | Persistência: conexão, Create e Read |
-| 13 | Persistência: Update, Delete e padrão DAO/Repository |
-| 14 | Migração para Spring Boot |
-| 15 | API REST + pipeline CI/CD |
-| 16 | Entrega final, documentação e apresentação |
+---
 
-## Combinado da equipe (ética e convivência)
+## 📈 Regras de Negócio &amp; Constantes Comercial (Aula 03)
 
-1. _(regra 1 definida pela equipe)_
-2. _(regra 2 definida pela equipe)_
-3. _(regra 3 definida pela equipe)_
+As regras comerciais e financeiras foram encapsuladas na classe utilitária de suporte a pedidos:
 
-## Licença
+* **Valor de frete por quilo:** `R$ 7,50` (cobrado por quilo iniciado, arredondando frações para cima).
+* **Frete mínimo:** `R$ 15,00` (aplicado para compras leves).
+* **Taxa de desconto padrão:** `10% (0.10)` sobre o subtotal do pedido.
+* **Teto limite de desconto:** `R$ 50,00` (desconto máximo por pedido).
+* **Valor para frete grátis:** `R$ 300,00` (pedidos acima deste valor isentam o frete).
 
-Projeto acadêmico — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
+---
+
+## 🧪 Encapsulamento &amp; Experimento do BigDecimal (Aula 05)
+
+Realizamos a blindagem dos atributos por meio de getters/setters com validação (lançando `IllegalArgumentException` em dados inválidos, como preços ou estoques negativos) e a migração dos valores monetários de `double` para **`BigDecimal`** na classe `Produto.java`:
+
+* **Quantidade de arquivos que quebraram:** `3 arquivos` (`ItemPedido.java`, `Pedido.java` e `Aplicacao.java`).
+* **O que esses arquivos tinham em comum:** Eram as únicas classes do sistema que realizavam cálculos matemáticos diretos (somas e multiplicações) com o preço do produto.
+* **Conclusão da Equipe:** O experimento comprovou a eficácia do encapsulamento. As classes que consumiam o preço apenas para exibição (como o restante do sistema) continuaram compilando sem alterações. O impacto ficou isolado nas entidades responsáveis pelas operações financeiras.
+
+---
+
+## 🧬 Herança, Polimorfismo e Recusa de Herança (Aula 06)
+
+### 1\. Hierarquias Implementadas
+
+* **Hierarquia de Pessoas:** Classe abstrata `Pessoa` estendida por `Cliente` e `Funcionario`, reutilizando validações de nome e documento e definindo a identificação polimórfica via `getIdentificacao()`.
+* **Hierarquia de Pagamentos:** Classe abstrata `FormaPagamento` estendida por `CartaoCredito`, `Boleto` e `Pix`, unificando a gestão de valores e implementando o método abstrato `processar()`.
+
+### 2\. Registro de Decisões de Recusa de Herança
+
+* **Proposta A — `CarrinhoDeCompras extends ArrayList
