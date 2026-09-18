@@ -1,50 +1,40 @@
+package com.ecommerce.pedidos.naver;
 
 import com.ecommerce.pedidos.naver.modelo.*;
-import com.ecommerce.pedidos.naver.modelo.pagamento.*;
-
+import com.ecommerce.pedidos.naver.modelo.pagamento.Pix;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class Aplicacao {
-
     public static void main(String[] args) {
+        Cliente cliente = new Cliente("Otávio Garcia", "123.456.789-00", "otavio@email.com");
+        Produto teclado = new Produto("TEC-01", "Teclado Mecânico", new BigDecimal("150.00"), 5);
 
-        Funcionario func = new Funcionario(
-            "Carlos Silva",
-            "987.654.321-11",
-            "M-4589",
-            "Gerente Comercial"
-        );
+        // 1. Validar recusa de pedido sem cliente
+        try {
+            new Pedido("PED-100", null);
+        } catch (IllegalArgumentException e) {
+            System.out.println("OK: " + e.getMessage());
+        }
 
-        System.out.println(func.getIdentificacao());
+        Pedido pedido = new Pedido("PED-101", cliente);
 
-        FormaPagamento[] pagamentos = {
+        // 2. Validar recusa de pagamento sem itens
+        try {
+            pedido.pagarCom(new Pix(new BigDecimal("150.00"), "chave-pix"));
+        } catch (IllegalStateException e) {
+            System.out.println("OK: " + e.getMessage());
+        }
 
-            new Pix(
-                new BigDecimal("150.00"),
-                "vendas@loja.com",
-                "E-mail"
-            ),
+        // 3. Adicionar itens e testar unificação de produto repetido
+        pedido.adicionarItem(teclado, 2);
+        pedido.adicionarItem(teclado, 1);
+        System.out.println("Qtd unificada: " + pedido.getItens().get(0).getQuantidade()); // 3
 
-            new Boleto(
-                new BigDecimal("300.00"),
-                "34191.79001 01043.510047 91020.150008 5 90000000030000",
-                LocalDate.now().plusDays(3)
-            ),
-
-            new CartaoCredito(
-                new BigDecimal("899.90"),
-                "**** **** **** 4321",
-                "Mastercard",
-                3
-            )
-        };
-
-        for (FormaPagamento pagamento : pagamentos) {
-
-            System.out.println(pagamento.getResumo());
-
-            pagamento.processar();
+        // 4. Testar proteção de coleção
+        try {
+            pedido.getItens().clear();
+        } catch (UnsupportedOperationException e) {
+            System.out.println("OK: Coleção protegida contra alterações externas.");
         }
     }
 }

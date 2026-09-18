@@ -1,113 +1,84 @@
 package com.ecommerce.pedidos.naver.modelo;
 
+import com.ecommerce.pedidos.naver.modelo.pagamento.FormaPagamento;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Agrupa o cliente, seus itens selecionados, a data e o status do ciclo de vida [24].
- */
 public class Pedido {
-    private String numero;
-    private Cliente cliente;
-    private String data;
-    private SituacaoPedido situacao; // Requisito desejável: agora usando Enum [7]
-    private List<ItemPedido> itens = new ArrayList<>(); // Lista encapsulada [6, 31]
+    private final String numero;
+    private final Cliente cliente; // Associação 1 (Obrigatória)
+    private final List<ItemPedido> itens = new ArrayList<>(); // Composição
+    private FormaPagamento formaPagamento; // Associação 0..1 (Opcional)
 
-    public Pedido() {
-    }
-
-    public Pedido(String numero, Cliente cliente, String data) {
+    public Pedido(String numero, Cliente cliente) {
         if (numero == null || numero.isBlank()) {
-            throw new IllegalArgumentException("O número de controle do pedido é obrigatório.");
+            throw new IllegalArgumentException("Número do pedido é obrigatório.");
         }
         if (cliente == null) {
-            throw new IllegalArgumentException("O cliente que realizou a compra é obrigatório.");
+            throw new IllegalArgumentException("Pedido exige um cliente válido."); // Validação de multiplicidade (1)
         }
-        if (data == null || data.isBlank()) {
-            throw new IllegalArgumentException("A data de abertura do pedido é obrigatória.");
-        }
-        this.numero = numero.trim();
+        this.numero = numero;
         this.cliente = cliente;
-        this.data = data.trim();
-        this.situacao = SituacaoPedido.ABERTO; // Todo pedido nasce em aberto [33]
     }
 
-    public String getNumero() {
-        return numero;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public SituacaoPedido getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(SituacaoPedido situacao) {
-        if (situacao == null) {
-            throw new IllegalArgumentException("A situação do pedido não pode ser nula.");
+    // Composição: o próprio Pedido instancia o ItemPedido
+    public void adicionarItem(Produto produto, int quantidade) {
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto não pode ser nulo.");
         }
-        this.situacao = situacao;
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero.");
+        }
+        if (!produto.temEstoqueDisponivel(quantidade)) {
+            throw new IllegalStateException("Estoque insuficiente para o produto: " + produto.getNome());
+        }
+
+        // Regra do produto repetido: soma a quantidade no item existente
+        for (ItemPedido item : itens) {
+            if (item.getProduto().getCodigo().equals(produto.getCodigo())) {
+                item.adicionarQuantidade(quantidade);
+                return;
+            }
+        }
+
+        itens.add(new ItemPedido(produto, quantidade, produto.getPreco()));
     }
 
-    /**
-     * BLINDAGEM DE COLEÇÃO (Retorna cópia imutável de leitura) [30, 31]
-     * Impede de forma absoluta manipulações indesejadas por fora dos métodos de negócio [10].
-     */
+    // Proteção de coleção
     public List<ItemPedido> getItens() {
         return Collections.unmodifiableList(itens);
     }
 
-    /**
-     * Adiciona um item ao carrinho do pedido.
-     * Realiza automaticamente a baixa do estoque do produto [34, 35].
-     */
-    public void adicionarItem(ItemPedido item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Não é possível adicionar um item nulo ao pedido.");
-        }
-        // Se houver saldo para atender a compra, procede o registro
-        if (item.getProduto().temEstoqueDisponivel(item.getQuantidade())) {
-            this.itens.add(item);
-            item.getProduto().baixarEstoque(item.getQuantidade()); // Deduz o saldo físico do produto [34]
-        } else {
-            throw new IllegalStateException("Pedido bloqueado: Estoque de '" + 
-                    item.getProduto().getNome() + "' é insuficiente.");
-        }
-    }
-
-    /**
-     * Calcula o valor financeiro acumulado de todos os itens do pedido [34, 35].
-     */
     public BigDecimal calcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        for (ItemPedido item : this.itens) {
-            total = total.add(item.calcularSubtotal()); // Uso correto de somas com BigDecimal [18]
+        for (ItemPedido item : itens) {
+            total = total.add(item.calcularSubtotal());
         }
         return total;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("==========================================").append(System.lineSeparator());
-        sb.append("PEDIDO: ").append(numero).append(" | Data: ").append(data).append(System.lineSeparator());
-        sb.append("Cliente: ").append(cliente.getIdentificacao()).append(System.lineSeparator());
-        sb.append("Situação: ").append(situacao).append(System.lineSeparator());
-        sb.append("------------------------------------------").append(System.lineSeparator());
-        for (ItemPedido item : itens) {
-            sb.append(" - ").append(item).append(System.lineSeparator());
+    public void pagarCom(FormaPagamento formaPagamento) {
+        if (itens.isEmpty()) {
+            throw new IllegalStateException("Pedido sem itens (1..*) não pode ser pago."); // Validação multiplicidade (1..*)
         }
-        sb.append("------------------------------------------").append(System.lineSeparator());
-        sb.append(String.format("VALOR TOTAL DO PEDIDO: R$ %,.2f", calcularValorTotal())).append(System.lineSeparator());
-        sb.append("==========================================");
-        return sb.toString();
+        if (formaPagamento == null) {
+            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+        }
+        this.formaPagamento = formaPagamento;
+        formaPagamento.processar();
+    }
+
+    public String getNumero() { 
+        return numero; 
+    }
+
+    public Cliente getCliente() { 
+        return cliente; 
+    }
+
+    public FormaPagamento getFormaPagamento() { 
+        return formaPagamento; 
     }
 }
