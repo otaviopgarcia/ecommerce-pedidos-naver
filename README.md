@@ -1,4 +1,4 @@
-```
+
 # Sistema de Gestão de Pedidos — E-commerce 🛒
 
 Projeto integrador da Unidade Curricular **Desenvolvimento Back-end** do Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas (CSTADS601) — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
@@ -46,7 +46,7 @@ Construção de um **Sistema de Gestão de Pedidos para um E-commerce** completo
 
 O repositório foi organizado em módulos e diretórios bem definidos:
 
-```text
+
 ecommerce-pedidos-naver/
 ├── docs/                    # Diagramas UML (PNG + .drawio) e documentação técnica
 │   ├── diagrama-de-classes.png
@@ -65,7 +65,7 @@ ecommerce-pedidos-naver/
 │   └── .gitignore
 └── front/                   # Módulo Front-End
 
-```
+
 
 ---
 
@@ -73,10 +73,10 @@ ecommerce-pedidos-naver/
 
 1. **Clonar o repositório:**
 
-```
+
 git clone https://github.com/otaviopgarcia/ecommerce-pedidos-naver.git
 
-```
+
 
 1. **Abrir a pasta do projeto Java:**
   * Abra **apenas a pasta** **back** no VS Code ou IntelliJ IDEA para reconhecer a raiz do Maven (`pom.xml`).
@@ -170,8 +170,5 @@ Refatoramos o fluxo de pagamentos aplicando o **Princípio Aberto/Fechado (SOLID
 
 Projeto acadêmico — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
 
-```
 
 ---
-
-```
