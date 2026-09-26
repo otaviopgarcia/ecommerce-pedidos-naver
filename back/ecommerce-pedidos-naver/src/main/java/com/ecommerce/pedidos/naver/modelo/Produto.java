@@ -18,6 +18,13 @@ public class Produto {
     }
 
     /**
+     * Construtor usado pela aplicação para criar produtos com SKU, nome, preço e estoque.
+     */
+    public Produto(String codigo, String nome, BigDecimal preco, int quantidadeEmEstoque) {
+        this(codigo, nome, "", preco, quantidadeEmEstoque);
+    }
+
+    /**
      * Construtor completo para inicializar o Produto em estado utilizável [16].
      * Os atributos que possuem regras de validação são passados diretamente pelos setters [5, 13].
      */

@@ -9,6 +9,10 @@ public class Cliente extends Pessoa {
     private String telefone;
     private String endereco;
 
+    public Cliente(String nome, String cpf, String email) {
+        this(nome, cpf, email, "", "");
+    }
+
     public Cliente(String nome, String cpf, String email, String telefone, String endereco) {
         super(nome, cpf); // Chama obrigatoriamente o construtor da mãe na primeira linha [25, 26]
         setEmail(email);

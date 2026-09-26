@@ -1,29 +1,33 @@
 package com.ecommerce.pedidos.naver.modelo;
 
-import com.ecommerce.pedidos.naver.modelo.pagamento.FormaPagamento;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.ecommerce.pedidos.naver.modelo.pagamento.FormaPagamento;
+
 public class Pedido {
     private final String numero;
-    private final Cliente cliente; // Associação 1 (Obrigatória)
-    private final List<ItemPedido> itens = new ArrayList<>(); // Composição
-    private FormaPagamento formaPagamento; // Associação 0..1 (Opcional)
+    private final Cliente cliente;
+    private final List<ItemPedido> itens = new ArrayList<>();
+    private FormaPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente) {
         if (numero == null || numero.isBlank()) {
             throw new IllegalArgumentException("Número do pedido é obrigatório.");
         }
         if (cliente == null) {
-            throw new IllegalArgumentException("Pedido exige um cliente válido."); // Validação de multiplicidade (1)
+            throw new IllegalArgumentException("Pedido exige um cliente válido.");
         }
         this.numero = numero;
         this.cliente = cliente;
     }
 
-    // Composição: o próprio Pedido instancia o ItemPedido
+    public void adicionarItem(Produto produto) {
+        adicionarItem(produto, 1);
+    }
+
     public void adicionarItem(Produto produto, int quantidade) {
         if (produto == null) {
             throw new IllegalArgumentException("Produto não pode ser nulo.");
@@ -35,7 +39,6 @@ public class Pedido {
             throw new IllegalStateException("Estoque insuficiente para o produto: " + produto.getNome());
         }
 
-        // Regra do produto repetido: soma a quantidade no item existente
         for (ItemPedido item : itens) {
             if (item.getProduto().getCodigo().equals(produto.getCodigo())) {
                 item.adicionarQuantidade(quantidade);
@@ -46,7 +49,6 @@ public class Pedido {
         itens.add(new ItemPedido(produto, quantidade, produto.getPreco()));
     }
 
-    // Proteção de coleção
     public List<ItemPedido> getItens() {
         return Collections.unmodifiableList(itens);
     }
@@ -59,26 +61,30 @@ public class Pedido {
         return total;
     }
 
-    public void pagarCom(FormaPagamento formaPagamento) {
+    public void pagar(FormaPagamento formaPagamento) {
         if (itens.isEmpty()) {
-            throw new IllegalStateException("Pedido sem itens (1..*) não pode ser pago."); // Validação multiplicidade (1..*)
+            throw new IllegalStateException("Pedido sem itens (1..*) não pode ser pago.");
         }
         if (formaPagamento == null) {
             throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
         }
         this.formaPagamento = formaPagamento;
-        formaPagamento.processar();
+        formaPagamento.processar(formaPagamento.getValor());
     }
 
-    public String getNumero() { 
-        return numero; 
+    public void pagarCom(FormaPagamento formaPagamento) {
+        pagar(formaPagamento);
     }
 
-    public Cliente getCliente() { 
-        return cliente; 
+    public String getNumero() {
+        return numero;
     }
 
-    public FormaPagamento getFormaPagamento() { 
-        return formaPagamento; 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
     }
 }

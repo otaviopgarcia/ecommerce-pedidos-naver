@@ -3,7 +3,7 @@ package com.ecommerce.pedidos.naver.modelo.pagamento;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public abstract class FormaPagamento {
+public abstract class FormaPagamento implements ProcessadorPagamento {
 
     private BigDecimal valor;
     private LocalDateTime dataDoPagamento;
@@ -31,7 +31,8 @@ public abstract class FormaPagamento {
         return dataDoPagamento;
     }
 
-    public abstract boolean processar();
+    @Override
+    public abstract boolean processar(BigDecimal valor);
 
     public String getResumo() {
         return String.format(
