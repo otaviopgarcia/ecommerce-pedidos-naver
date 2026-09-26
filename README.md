@@ -46,7 +46,7 @@ Construção de um **Sistema de Gestão de Pedidos para um E-commerce** completo
 
 O repositório foi organizado em módulos e diretórios bem definidos:
 
-
+```text
 ecommerce-pedidos-naver/
 ├── docs/                    # Diagramas UML (PNG + .drawio) e documentação técnica
 │   ├── diagrama-de-classes.png
