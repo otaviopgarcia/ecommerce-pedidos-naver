@@ -1,55 +1,59 @@
-
 import java.math.BigDecimal;
-import java.util.List;
 
+import com.ecommerce.pedidos.naver.excecao.ECommerceException;
+import com.ecommerce.pedidos.naver.excecao.EstoqueInsuficienteException;
+import com.ecommerce.pedidos.naver.excecao.PedidoInvalidoException;
 import com.ecommerce.pedidos.naver.modelo.Cliente;
 import com.ecommerce.pedidos.naver.modelo.Pedido;
 import com.ecommerce.pedidos.naver.modelo.Produto;
-import com.ecommerce.pedidos.naver.modelo.pagamento.Boleto;
-import com.ecommerce.pedidos.naver.modelo.pagamento.CartaoCredito;
-import com.ecommerce.pedidos.naver.modelo.pagamento.Dinheiro;
 import com.ecommerce.pedidos.naver.modelo.pagamento.Pix;
 import com.ecommerce.pedidos.naver.modelo.pagamento.ProcessadorPagamento;
 
 public class Aplicacao {
+
     public static void main(String[] args) {
-        System.out.println("=== MÓDULO DE PAGAMENTO POLIMÓRFICO (AULA 08) ===\n");
+        System.out.println("=== SISTEMA DE GESTÃO DE PEDIDOS (E-COMMERCE NAVER) — AULA 09 ===");
 
         Cliente cliente = new Cliente("Otávio Garcia", "123.456.789-00", "otavio@email.com");
-        Produto notebook = new Produto("PRD-01", "Notebook Gamer", new BigDecimal("3500.00"), 10);
-        Produto mouse = new Produto("PRD-02", "Mouse Sem Fio", new BigDecimal("150.00"), 20);
+        Produto p1 = new Produto("PROD-01", "Teclado Mecânico", new BigDecimal("250.00"), 3);
 
-        // 1. Testando Sobrecarga (adicionarItem)
-        Pedido pedido = new Pedido("PED-2026", cliente);
-        pedido.adicionarItem(notebook); // Adiciona 1 unidade via sobrecarga
-        pedido.adicionarItem(mouse, 2);  // Adiciona 2 unidades via método padrão
-
-        System.out.println("Pedido: " + pedido.getNumero() + " | Cliente: " + pedido.getCliente().getNome());
-        System.out.println("Valor Total do Pedido: R$ " + pedido.calcularValorTotal() + "\n");
-
-        // 2. Laço Polimórfico
-        List<ProcessadorPagamento> formasPagamento = List.of(
-            new Pix(pedido.calcularValorTotal(), "otavio@pix.com"),
-            new Boleto(pedido.calcularValorTotal(), "34191.23456 78901.234567 89012.345678 1 90000000380000"),
-            new CartaoCredito(pedido.calcularValorTotal(), "4532123456788888", 10),
-            new Dinheiro(new BigDecimal("4000.00")) // 4ª forma criada sem alterar o Pedido!
-        );
-
-        System.out.println("--- Testando Processamento Polimórfico ---");
-        for (ProcessadorPagamento processador : formasPagamento) {
-            System.out.println("\nForma: " + processador.getDescricao());
-            boolean aprovado = processador.processar(pedido.calcularValorTotal());
-            System.out.println("Comprovante: " + processador.getComprovante());
-            System.out.println("Resultado: " + (aprovado ? "APROVADO" : "RECUSADO"));
-        }
-
-        // 3. Trava de Segurança
-        System.out.println("\n--- Teste de Trava de Segurança ---");
-        Pedido pedidoVazio = new Pedido("PED-EMPTY", cliente);
+        System.out.println("\n--- CENÁRIO 1: Tentativa de adicionar produto com estoque insuficiente ---");
+        Pedido pedido1 = new Pedido("PED-001", cliente);
         try {
-            pedidoVazio.pagar(new Pix(new BigDecimal("100.00"), "chave"));
-        } catch (IllegalStateException e) {
-            System.out.println("OK (Recusou pagamento de pedido vazio): " + e.getMessage());
+            pedido1.adicionarItem(p1, 5);
+        } catch (EstoqueInsuficienteException e) {
+            System.out.println(" Falha tratada: " + e.getMessage());
+            System.out.println(" Produto: " + e.getProduto().getNome() + " | Solicitado: " + e.getQuantidadeSolicitada());
+        } catch (ECommerceException e) {
+            System.out.println(" Erro de negócio: " + e.getMessage());
         }
+
+        System.out.println("\n--- CENÁRIO 2: Tentativa de pagar pedido sem itens ---");
+        Pedido pedidoVazio = new Pedido("PED-002", cliente);
+        try {
+            ProcessadorPagamento pix = new Pix(new BigDecimal("100.00"), "chave@pix.com");
+            pedidoVazio.pagar(pix);
+        } catch (PedidoInvalidoException e) {
+            System.out.println(" Falha tratada: " + e.getMessage());
+        } catch (ECommerceException e) {
+            System.out.println(" Erro de negócio: " + e.getMessage());
+        }
+
+        System.out.println("\n--- CENÁRIO 3: Caminho feliz e tentativa de pagar 2 vezes ---");
+        try {
+            Pedido pedidoOk = new Pedido("PED-003", cliente);
+            pedidoOk.adicionarItem(p1, 2);
+            ProcessadorPagamento pix = new Pix(pedidoOk.calcularValorTotal(), "otavio@pix.com");
+            pedidoOk.pagar(pix);
+
+            System.out.println("\nTentando pagar o mesmo pedido uma 2ª vez:");
+            pedidoOk.pagar(pix);
+        } catch (PedidoInvalidoException e) {
+            System.out.println(" Falha tratada: " + e.getMessage());
+        } catch (ECommerceException e) {
+            System.out.println(" Erro de negócio: " + e.getMessage());
+        }
+
+        System.out.println("\n=== EXECUÇÃO CONCLUÍDA COM SUCESSO E SEM CRASHES ===");
     }
 }

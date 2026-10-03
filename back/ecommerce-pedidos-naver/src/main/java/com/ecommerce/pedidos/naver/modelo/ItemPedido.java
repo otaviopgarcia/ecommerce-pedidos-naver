@@ -8,6 +8,10 @@ public class ItemPedido {
     private int quantidade;
     private final BigDecimal precoPraticado; // Preço congelado no momento da compra
 
+    public ItemPedido(Produto produto, int quantidade) {
+        this(produto, quantidade, produto != null ? produto.getPreco() : BigDecimal.ZERO);
+    }
+
     public ItemPedido(Produto produto, int quantidade, BigDecimal precoPraticado) {
 
         if (produto == null) {
