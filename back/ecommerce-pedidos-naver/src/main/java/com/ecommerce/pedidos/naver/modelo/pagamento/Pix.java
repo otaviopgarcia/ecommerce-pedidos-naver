@@ -2,7 +2,7 @@ package com.ecommerce.pedidos.naver.modelo.pagamento;
 
 import java.math.BigDecimal;
 
-public class Pix extends FormaPagamento implements ProcessadorPagamento {
+public class Pix extends FormaPagamento {
     private final String chave;
 
     public Pix(BigDecimal valor, String chave) {
@@ -11,6 +11,10 @@ public class Pix extends FormaPagamento implements ProcessadorPagamento {
             throw new IllegalArgumentException("Chave Pix é obrigatória.");
         }
         this.chave = chave;
+    }
+
+    public Pix(BigDecimal valor, String chave, String tipoChave) {
+        this(valor, chave);
     }
 
     @Override
