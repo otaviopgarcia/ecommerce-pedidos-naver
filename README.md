@@ -19,16 +19,16 @@ Construção de um **Sistema de Gestão de Pedidos para um E-commerce** completo
 
 ---
 
-## ⚙️ Funcionalidades
+## ⚙️ Funcionalidades Previstas
 
-- [x] **Cadastro e gerenciamento de produtos** (controle de estoque, preço com `BigDecimal` e status ativo/inativo)
-- [x] **Cadastro e gerenciamento de clientes e funcionários** (hierarquia abstrata a partir de `Pessoa`)
-- [x] **Criação e gerenciamento de pedidos e itens** (composição `Pedido ◆── ItemPedido`, associação com `Cliente` e `Produto`)
-- [x] **Processamento de pagamentos polimórfico** (interface `ProcessadorPagamento` para Cartão de Crédito, Boleto, Pix e Dinheiro)
-- [x] **Tratamento de exceções customizadas e resiliência** (hierarquia com `ECommerceException`, exceções com dados de negócio e eliminação de stack traces)
-- [ ] **Testes automatizados** (unitários e de integração, cobertura mínima de 70%)
-- [ ] **Pipeline de CI/CD** (GitHub Actions para automação de testes e builds)
-- [ ] **API REST** (Spring Boot para integração com front-end)
+* [x] **Cadastro e gerenciamento de produtos** (controle de estoque, preço com `BigDecimal` e status ativo/inativo)
+* [x] **Cadastro e gerenciamento de clientes e funcionários** (hierarquia abstrata a partir de `Pessoa`)
+* [x] **Criação e gerenciamento de pedidos e itens** (composição `Pedido ◆── ItemPedido`, associação com `Cliente` e `Produto`)
+* [x] **Processamento de pagamentos polimórfico** (hierarquia e interface `ProcessadorPagamento` para Cartão de Crédito, Boleto, Pix e Dinheiro)
+* [x] **Tratamento de exceções customizadas e resiliência** (hierarquia com `ECommerceException`, exceções com dados de negócio e eliminação de stack traces)
+* [x] **Testes automatizados** (suíte de 22 testes unitários em JUnit 5 com cobertura de ~89% do domínio)
+* [ ] **Pipeline de CI/CD** (GitHub Actions para automação de testes e builds)
+* [ ] **API REST** (Spring Boot para integração com front-end)
 
 ---
 
@@ -168,7 +168,7 @@ Hierarquia de exceções de domínio que substitui *stack traces* genéricos por
 | **07** | Relacionamentos entre classes do domínio (Associação, Agregação e Composição)    | Concluído |
 | **08** | Módulo de pagamento polimórfico e interface `ProcessadorPagamento`               | Concluído |
 | **09** | Tratamento de exceções customizadas                                              | Concluído |
-| **10** | Suíte de testes unitários (JUnit)                                                | Em breve  |
+| **10** | Suíte de testes unitários (JUnit 5) e Plano de Testes                            | Concluído |
 | **11** | Suíte de testes de integração + relatório de cobertura                           | Em breve  |
 | **12** | Persistência: conexão com banco de dados, Create e Read                          | Em breve  |
 | **13** | Persistência: Update, Delete e padrão DAO/Repository                             | Em breve  |
