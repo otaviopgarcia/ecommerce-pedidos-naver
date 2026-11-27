@@ -1,6 +1,7 @@
 package com.ecommerce.pedidos.naver.excecao;
 
 public class PagamentoRecusadoException extends ECommerceException {
+
     private final String motivo;
 
     public PagamentoRecusadoException(String formaPagamento, String motivo) {
