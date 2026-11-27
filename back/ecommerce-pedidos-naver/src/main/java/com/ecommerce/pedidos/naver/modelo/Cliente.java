@@ -60,4 +60,8 @@ public class Cliente extends Pessoa {
     public String toString() {
         return String.format("Cliente: %s | E-mail: %s | Telefone: %s", getNome(), email, telefone);
     }
+
+    public String getCpf() {
+        return getDocumento();
+    }
 }

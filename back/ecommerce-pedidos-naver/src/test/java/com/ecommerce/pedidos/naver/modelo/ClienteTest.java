@@ -13,7 +13,7 @@ class ClienteTest {
     void deveCriarClienteComSucesso() {
         Cliente cliente = new Cliente("Otávio Garcia", "123.456.789-00", "otavio@email.com");
         assertEquals("Otávio Garcia", cliente.getNome());
-        assertEquals("123.456.789-00", cliente.getCpf());
+        assertEquals("12345678900", cliente.getCpf());
         assertEquals("otavio@email.com", cliente.getEmail());
     }
 

@@ -4,6 +4,7 @@ import com.ecommerce.pedidos.naver.excecao.EstoqueInsuficienteException;
 import com.ecommerce.pedidos.naver.excecao.PagamentoRecusadoException;
 import com.ecommerce.pedidos.naver.excecao.PedidoInvalidoException;
 import com.ecommerce.pedidos.naver.modelo.pagamento.ProcessadorPagamento;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -118,5 +119,10 @@ public class Pedido {
 
     public SituacaoPedido getSituacao() {
         return situacao;
+    }
+
+    public void setSituacao(SituacaoPedido pago) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSituacao'");
     }
 }
